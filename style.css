@@ -1,0 +1,100 @@
+:root {
+    --w: 200px;
+    --h: 300px;
+    --z: 175px; 
+    --border-color: #ffd700;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: #101010; /* Nền đen sâu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; <-- Bỏ dòng này để xếp theo chiều dọc từ trên xuống */
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- PHẦN TIÊU ĐỀ NỔI BẬT --- */
+.main-title {
+    margin-top: 50px; /* Cách mép trên */
+    margin-bottom: 80px; /* Cách đèn một khoảng thoáng */
+    color: #FFD700; /* Màu chữ Vàng Kim */
+    font-size: 2.5rem; /* Chữ lớn */
+    text-transform: uppercase; /* Chữ in hoa */
+    letter-spacing: 4px; /* Khoảng cách chữ rộng ra cho sang */
+    text-align: center;
+    
+    /* Hiệu ứng phát sáng Rực Rỡ */
+    text-shadow: 
+        0 0 10px #FFD700,  /* Bóng vàng gần */
+        0 0 20px #FF4500,  /* Bóng cam xa hơn */
+        0 0 40px #FF0000;  /* Bóng đỏ ngoài cùng */
+    
+    animation: glow 2s ease-in-out infinite alternate; /* Chữ nhấp nháy nhẹ */
+    z-index: 100;
+}
+
+/* Animation cho chữ nhấp nháy */
+@keyframes glow {
+    from { text-shadow: 0 0 10px #FFD700, 0 0 20px #FF4500; opacity: 0.9; }
+    to { text-shadow: 0 0 20px #FFD700, 0 0 30px #ff0000; opacity: 1; }
+}
+
+/* --- PHẦN ĐÈN (Giữ nguyên) --- */
+.scene {
+    perspective: 1000px;
+    position: relative;
+}
+
+.carousel {
+    width: var(--w);
+    height: var(--h);
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 20s linear infinite; /* Quay chậm lại chút (20s) cho dễ xem tranh */
+}
+
+.face {
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    border: 3px solid var(--border-color);
+    background: rgba(255, 228, 196, 0.9); /* Màu nền kem giấy điệp */
+    transform: rotateY(calc(var(--i) * 60deg)) translateZ(var(--z));
+    box-shadow: inset 0 0 20px rgba(255, 140, 0, 0.5);
+}
+
+.face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung */
+    display: block;
+    /* Bộ lọc màu giúp ảnh trông giống tranh giấy điệp cổ */
+    filter: sepia(0.2) contrast(1.1) saturate(1.2); 
+    background-color: #f4e4bc; /* Màu nền giấy trong khi chờ ảnh tải */
+}
+
+.light-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 80%;
+    background: white;
+    box-shadow: 0 0 60px 30px rgba(255, 165, 0, 0.6);
+    border-radius: 5px;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+@keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
